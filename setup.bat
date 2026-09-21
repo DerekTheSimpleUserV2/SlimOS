@@ -1,24 +1,54 @@
-```bat
 @echo off
-title SlimOS - Cleanup
+title SlimOS
 color 0B
 
+:menu
+cls
 echo ==============================
-echo          SlimOS
-echo        Windows Cleanup
+echo            SlimOS
 echo ==============================
 echo.
-echo Cleaning temporary files...
+echo [1] Clean Windows
+echo [2] Reduce Telemetry
+echo [3] Optimize Services
+echo [4] Manage Apps
+echo [5] Full Setup
+echo [6] Exit
 echo.
+set /p choice=Select an option: 
 
-del /q /f "%TEMP%\*" >nul 2>&1
-for /d %%D in ("%TEMP%\*") do rd /s /q "%%D" >nul 2>&1
+if "%choice%"=="1" goto cleanup
+if "%choice%"=="2" goto telemetry
+if "%choice%"=="3" goto services
+if "%choice%"=="4" goto apps
+if "%choice%"=="5" goto full
+if "%choice%"=="6" exit
 
-del /q /f "%SystemRoot%\Temp\*" >nul 2>&1
-for /d %%D in ("%SystemRoot%\Temp\*") do rd /s /q "%%D" >nul 2>&1
+goto menu
 
+:cleanup
+call "%~dp0cleanup.bat"
+goto menu
+
+:telemetry
+call "%~dp0telemetry.bat"
+goto menu
+
+:services
+call "%~dp0services.bat"
+goto menu
+
+:apps
+call "%~dp0apps.bat"
+goto menu
+
+:full
+cls
+echo ==============================
+echo          SlimOS Full Setup
+echo ==============================
 echo.
-echo Cleanup completed.
+echo Full Setup is not ready yet.
 echo.
 pause
-```
+goto menu
